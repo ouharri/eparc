@@ -79,7 +79,7 @@ export default function Login() {
         setIsHandelLogin(true);
 
         await setPasswordError(passwordInput === '');
-        await setEmailError(emailInput === '');
+        await setEmailError(emailInput === '' || !EMAIL_REGEX.test(emailInput));
 
         if (emailError || passwordError || passwordInput === '' || emailInput === '') {
             setIsHandelLogin(false);
