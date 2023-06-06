@@ -27,7 +27,7 @@ export default function Register() {
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
     const [isHandelRegister, setIsHandelRegister] = useState(false);
 
-    const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,63})+$/u;
 
     const [flag, setFlag] = useState(false);
 
@@ -148,7 +148,7 @@ export default function Register() {
             });
         } catch (error) {
             setIsHandelRegister(false);
-            Swal.fire('Error', '', 'error');
+            await Swal.fire('Error', '', 'error');
         }
     };
 
@@ -258,6 +258,7 @@ export default function Register() {
                             <Button bg={isHandelRegister && 'red.200' || 'red.400'} variant={'solid'}
                                     className={isHandelRegister && 'cursor-not-allowed'}
                                     loadingText="Submitting"
+                                    disabled={isHandelRegister}
                                     type="submit"
                                     size="lg"
                                     color={'white'}

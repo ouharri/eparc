@@ -50,7 +50,7 @@ export default function Login() {
 
     const [emailErrorMsg, setEmailErrorMsg] = useState('Email is required.');
 
-    const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,63})+$/u;
 
     const {isOpen, onOpen, onClose} = useDisclosure()
 
@@ -171,6 +171,7 @@ export default function Login() {
                             <Button bg={isHandelLogin && 'red.200' || 'red.400'} variant={'solid'}
                                     className={isHandelLogin && 'cursor-not-allowed'}
                                     loadingText="Submitting"
+                                    disabled={isHandelLogin}
                                     type="submit"
                                     size="lg"
                                     color={'white'}
