@@ -29,7 +29,7 @@ const Logo = (props) => {
                 />
             </svg>
             <p>
-                {'UmaiParc'}
+                {'FleetLinker'}
             </p>
         </div>
     );

@@ -15,11 +15,11 @@ import {
     Text,
     useToast
 } from '@chakra-ui/react';
+import Swal from 'sweetalert2';
+import axios from '../../plugins/axios';
 import {useEffect, useState} from 'react';
 import {ViewIcon, ViewOffIcon} from '@chakra-ui/icons';
 import {Link as ReachLink, useNavigate} from 'react-router-dom';
-import Swal from 'sweetalert2';
-import axios from '../../plugins/axios';
 import FooterBanner from "../../components/footerBanner";
 
 export default function Register() {
