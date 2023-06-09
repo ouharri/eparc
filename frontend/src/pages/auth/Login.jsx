@@ -81,7 +81,7 @@ export default function Login() {
         await setPasswordError(passwordInput === '');
         await setEmailError(emailInput === '' || !EMAIL_REGEX.test(emailInput));
 
-        if (emailError || passwordError || passwordInput === '' || emailInput === '') {
+        if (emailError || passwordError || passwordInput === '' || emailInput === '' || !EMAIL_REGEX.test(emailInput)) {
             setIsHandelLogin(false);
             await toast({
                 title: 'Please validate all fields.',
