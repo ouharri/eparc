@@ -19,21 +19,52 @@ import {
     useDisclosure,
     VStack,
 } from '@chakra-ui/react';
-import { FiBell, FiChevronDown, FiCompass, FiHome, FiMenu, FiSettings, FiStar, FiTrendingUp, FiTruck, FiFileText, FiUser } from 'react-icons/fi';
+import isAuthenticated from "../../helpers/authenticate";
+import {FiBell, FiChevronDown, FiFileText, FiHome, FiMenu, FiSettings, FiTruck, FiUser} from 'react-icons/fi';
+import {useEffect, useState} from "react";
+import {Link as ReachLink} from "react-router-dom";
+import logout from "../../helpers/logout";
+import userInfo from "../../helpers/userInfo";
+
+if (!isAuthenticated()) {
+    window.location.href = "/login";
+}
 
 const LinkItems = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Vehicle', icon: FiTruck },
-  { name: 'Insurance', icon: FiFileText },
-  { name: 'Driver', icon: FiUser },
-  { name: 'Settings', icon: FiSettings },
+    {name: 'Home', icon: FiHome},
+    {name: 'Vehicle', icon: FiTruck},
+    {name: 'Insurance', icon: FiFileText},
+    {name: 'Driver', icon: FiUser},
+    {name: 'Settings', icon: FiSettings},
 ];
 
+export default function SidebarWithHeader({children}) {
 
-export default function SidebarWithHeader({
-                                              children
-                                          }) {
+    if (!isAuthenticated()) {
+        window.location.href = "/login";
+    }
+
     const {isOpen, onOpen, onClose} = useDisclosure();
+
+    const [user, setUser] = useState({});
+    const [isAuth, setIsAuth] = useState(false);
+
+    useEffect(() => {
+        async function checkAuth() {
+            await setUser(await userInfo());
+        }
+
+        checkAuth().then(async r => {
+            if (await isAuthenticated()) {
+                await setUser(await userInfo());
+            } else {
+                window.location.href = "/login";
+            }
+        });
+
+    }, [isAuth]);
+
+
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
             <SidebarContent
@@ -53,7 +84,7 @@ export default function SidebarWithHeader({
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
-            <MobileNav onOpen={onOpen}/>
+            <MobileNav onOpen={onOpen} User={user.user}/>
             <Box ml={{base: 0, md: 60}} p="4">
                 {children}
             </Box>
@@ -65,6 +96,7 @@ const SidebarContent = ({onClose, ...rest}) => {
     return (
         <Box
             transition="3s ease"
+            zIndex="10"
             bg={useColorModeValue('white', 'gray.900')}
             borderRight="1px"
             borderRightColor={useColorModeValue('gray.200', 'gray.700')}
@@ -74,7 +106,7 @@ const SidebarContent = ({onClose, ...rest}) => {
             {...rest}>
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-                 FleetLinker
+                    FleetLinker
                 </Text>
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
             </Flex>
@@ -117,11 +149,20 @@ const NavItem = ({icon, children, ...rest}) => {
     );
 };
 
-const MobileNav = ({onOpen, ...rest}) => {
+const MobileNav = ({onOpen,User, ...rest}) => {
+
+    const bgColor = useColorModeValue('white', 'gray.800');
+    const borderColor = useColorModeValue('gray.200', 'gray.900');
+
     return (
         <Flex
             ml={{base: 0, md: 60}}
             px={{base: 4, md: 4}}
+            position={"fixed"}
+            top="0"
+            right="0"
+            width="100%"
+            zIndex="1"
             height="20"
             alignItems="center"
             bg={useColorModeValue('white', 'gray.900')}
@@ -162,7 +203,7 @@ const MobileNav = ({onOpen, ...rest}) => {
                                 <Avatar
                                     size={'sm'}
                                     src={
-                                        'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
+                                        User?.avatar || ""
                                     }
                                 />
                                 <VStack
@@ -170,10 +211,7 @@ const MobileNav = ({onOpen, ...rest}) => {
                                     alignItems="flex-start"
                                     spacing="1px"
                                     ml="2">
-                                    <Text fontSize="sm">Justina Clark</Text>
-                                    <Text fontSize="xs" color="gray.600">
-                                        Admin
-                                    </Text>
+                                    <Text fontSize="sm">{User?.firstName || "" && " " && User?.lastName || ""}</Text>
                                 </VStack>
                                 <Box display={{base: 'none', md: 'flex'}}>
                                     <FiChevronDown/>
@@ -181,13 +219,19 @@ const MobileNav = ({onOpen, ...rest}) => {
                             </HStack>
                         </MenuButton>
                         <MenuList
-                            bg={useColorModeValue('white', 'gray.900')}
-                            borderColor={useColorModeValue('gray.200', 'gray.700')}>
-                            <MenuItem>Profile</MenuItem>
-                            <MenuItem>Settings</MenuItem>
-                            <MenuItem>Billing</MenuItem>
+                            bg={bgColor}
+                            borderColor={borderColor}>
+                            <MenuItem as={ReachLink} to="/Profile">
+                                Profile
+                            </MenuItem>
+                            <MenuItem as={ReachLink} to="/Settings">
+                                Settings
+                            </MenuItem>
+                            <MenuItem as={ReachLink} to="/dashboard">
+                                dashboard
+                            </MenuItem>
                             <MenuDivider/>
-                            <MenuItem>Sign out</MenuItem>
+                            <MenuItem onClick={logout}>Sign out</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>

@@ -1,11 +1,18 @@
 import {
+    Avatar,
     Box,
     Button,
     Collapse,
     Flex,
+    HStack,
     Icon,
     IconButton,
     Link,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    MenuItem,
+    MenuList,
     Popover,
     PopoverContent,
     PopoverTrigger,
@@ -14,24 +21,31 @@ import {
     useBreakpointValue,
     useColorModeValue,
     useDisclosure,
+    VStack,
 } from '@chakra-ui/react';
+import logout from "../../helpers/logout";
+import {FiChevronDown} from "react-icons/fi";
 import {Link as ReachLink} from 'react-router-dom';
-import {ChevronDownIcon, ChevronRightIcon, CloseIcon, HamburgerIcon,} from '@chakra-ui/icons';
+import {ChevronDownIcon, ChevronRightIcon, CloseIcon, HamburgerIcon} from '@chakra-ui/icons';
 
-export default function WithSubnavigation() {
+export default function WithSubnavigation({IsAuth, User}) {
+
     const {isOpen, onToggle} = useDisclosure();
+    const bgColor = useColorModeValue('white', 'gray.800');
+    const textColor = useColorModeValue('gray.600', 'white');
+    const borderColor = useColorModeValue('gray.200', 'gray.900');
 
     return (
         <Box>
             <Flex
-                bg={useColorModeValue('white', 'gray.800')}
-                color={useColorModeValue('gray.600', 'white')}
+                bg={bgColor}
+                color={textColor}
                 minH={'60px'}
                 py={{base: 2}}
                 px={{base: 4}}
                 borderBottom={1}
                 borderStyle={'solid'}
-                borderColor={useColorModeValue('gray.200', 'gray.900')}
+                borderColor={borderColor}
                 align={'center'}>
                 <Flex
                     flex={{base: 1, md: 'auto'}}
@@ -50,7 +64,7 @@ export default function WithSubnavigation() {
                     <Text
                         textAlign={useBreakpointValue({base: 'center', md: 'left'})}
                         fontFamily={'heading'}
-                        color={useColorModeValue('gray.800', 'white')}>
+                        color={textColor}>
                         FleetLinker
                     </Text>
 
@@ -58,36 +72,80 @@ export default function WithSubnavigation() {
                         <DesktopNav/>
                     </Flex>
                 </Flex>
-
-                <Stack
-                    flex={{base: 1, md: 0}}
-                    justify={'flex-end'}
-                    direction={'row'}
-                    spacing={6}>
-                    <Button
-                        as={ReachLink}
-                        to={'/login'}
-                        fontSize={'sm'}
-                        fontWeight={400}
-                        variant={'link'}
-                    >
-                        Sign In
-                    </Button>
-                    <Button
-                        as={ReachLink}
-                        to={'/register'}
-                        display={{base: 'none', md: 'inline-flex'}}
-                        fontSize={'sm'}
-                        fontWeight={600}
-                        color={'white'}
-                        bg={'red.400'}
-                        href={'#'}
-                        _hover={{
-                            bg: 'pink.300',
-                        }}>
-                        Sign Up
-                    </Button>
-                </Stack>
+                {!IsAuth ?
+                    (
+                        <Stack
+                            flex={{base: 1, md: 0}}
+                            justify={'flex-end'}
+                            direction={'row'}
+                            spacing={6}>
+                            <Button
+                                as={ReachLink}
+                                to={'/login'}
+                                fontSize={'sm'}
+                                fontWeight={400}
+                                variant={'link'}
+                            >
+                                Sign In
+                            </Button>
+                            <Button
+                                as={ReachLink}
+                                to={'/register'}
+                                display={{base: 'none', md: 'inline-flex'}}
+                                fontSize={'sm'}
+                                fontWeight={600}
+                                color={'white'}
+                                bg={'red.400'}
+                                href={'#'}
+                                _hover={{
+                                    bg: 'pink.300',
+                                }}>
+                                Sign Up
+                            </Button>
+                        </Stack>
+                    ) : (
+                        <Menu>
+                            <MenuButton
+                                py={2}
+                                transition="all 0.3s"
+                                _focus={{boxShadow: 'none'}}>
+                                <HStack>
+                                    <Avatar
+                                        size={'sm'}
+                                        src={
+                                            User?.avatar || ""
+                                        }
+                                    />
+                                    <VStack
+                                        display={{base: 'none', md: 'flex'}}
+                                        alignItems="flex-start"
+                                        spacing="1px"
+                                        ml="2">
+                                        <Text fontSize="sm">{User?.firstName || "" && " " && User?.lastName || ""}</Text>
+                                    </VStack>
+                                    <Box display={{base: 'none', md: 'flex'}}>
+                                        <FiChevronDown/>
+                                    </Box>
+                                </HStack>
+                            </MenuButton>
+                            <MenuList
+                                bg={bgColor}
+                                borderColor={borderColor}>
+                                <MenuItem as={ReachLink} to="/Profile">
+                                    Profile
+                                </MenuItem>
+                                <MenuItem as={ReachLink} to="/Settings">
+                                    Settings
+                                </MenuItem>
+                                <MenuItem as={ReachLink} to="/dashboard">
+                                    dashboard
+                                </MenuItem>
+                                <MenuDivider/>
+                                <MenuItem onClick={logout}>Sign out</MenuItem>
+                            </MenuList>
+                        </Menu>
+                    )
+                }
             </Flex>
 
             <Collapse in={isOpen} animateOpacity>
@@ -98,6 +156,7 @@ export default function WithSubnavigation() {
 }
 
 const DesktopNav = () => {
+
     const linkColor = useColorModeValue('gray.600', 'gray.200');
     const linkHoverColor = useColorModeValue('gray.800', 'white');
     const popoverContentBgColor = useColorModeValue('white', 'gray.800');
@@ -110,7 +169,8 @@ const DesktopNav = () => {
                         <PopoverTrigger>
                             <Link
                                 p={2}
-                                href={navItem.href ?? '#'}
+                                as={ReachLink}
+                                to={navItem.href ?? '#'}
                                 fontSize={'sm'}
                                 fontWeight={500}
                                 color={linkColor}
@@ -244,27 +304,31 @@ const MobileNavItem = ({label, children, href}) => {
 
 const NAV_ITEMS = [
 
+    // {
+    //     label: 'Find Work',
+    //     children: [
+    //         {
+    //             label: 'Job Board',
+    //             subLabel: 'Find your dream design job',
+    //             href: '#',
+    //         },
+    //         {
+    //             label: 'Freelance Projects',
+    //             subLabel: 'An exclusive list for contract work',
+    //             href: '#',
+    //         },
+    //     ],
+    // },
     {
-        label: 'Find Work',
-        children: [
-            {
-                label: 'Job Board',
-                subLabel: 'Find your dream design job',
-                href: '#',
-            },
-            {
-                label: 'Freelance Projects',
-                subLabel: 'An exclusive list for contract work',
-                href: '#',
-            },
-        ],
+        label: 'Home',
+        href: '/',
     },
     {
-        label: 'Learn Design',
-        href: '#',
+        label: 'About Us',
+        href: '/About',
     },
     {
-        label: 'Hire Designers',
-        href: '#',
+        label: 'Contact',
+        href: '/contact',
     },
 ];

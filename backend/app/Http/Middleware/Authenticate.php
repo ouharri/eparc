@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use Closure;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,7 +20,7 @@ class Authenticate
         }
 
         try {
-            $decoded = JWT::decode($token, env('JWT_SECRET'), ['HS256']);
+            $decoded = JWT::decode($token, new Key(env('JWT_SECRET'), 'HS256'));
             $userId = $decoded->sub;
             $user = User::find($userId);
             if (!$user) {

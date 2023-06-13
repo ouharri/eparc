@@ -4,6 +4,8 @@ import './style/index.css';
 import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 import HomePage from './pages/Home';
+import Contact from './pages/contact';
+import About from './pages/About';
 import VehicleForm from './pages/Vehicle/VehicleForm';
 import VehicleList from './pages/Vehicle/VehicleList';
 import InsuranceForm from './pages/Insurance/InsuranceForm';
@@ -26,19 +28,26 @@ function App() {
                     <BrowserRouter>
                         <Routes>
                             <Route path="/" element={<HomePage/>}/>
+                            <Route path="/contact" element={<Contact/>}/>
+                            <Route path="/about" element={<About/>}/>
+
+
                             <Route path="/register" element={<Register/>}/>
                             <Route path="/login" element={<Login/>}/>
-                            <Route path="/vehicle/Add" element={<VehicleForm/>}/>
-                            <Route path="/vehicle/List" element={<VehicleList/>}/>
-                            <Route path="/insurance/Add" element={<InsuranceForm/>}/>
-                            <Route path="/driver/Add" element={<DriverForm/>}/>
-                            <Route path="/admin" element={<Admin />} />
-                            <Route path="/driver/List" element={<DriverList/>} />
-                            <Route path="/driver/edit/:ID_DRIVER" element={<DriverEdit />} />
-                            <Route path="/vehicle/edit/:ID_VEHICLE" element={<VehicleEdit />} />
-                            <Route path="/insurance/List" element={<InsuranceList />} />
-                            <Route path="/insurance/edit/:ID_INSURANCE" element={<InsuranceEdit />} />
 
+                            <Route path="/dashboard" element={<Admin />} />
+
+                            <Route path="dashboard/vehicle/Add" element={<VehicleForm/>}/>
+                            <Route path="dashboard/vehicle/List" element={<VehicleList/>}/>
+                            <Route path="dashboard/vehicle/edit/:ID_VEHICLE" element={<VehicleEdit />} />
+
+                            <Route path="dashboard/insurance/Add" element={<InsuranceForm/>}/>
+                            <Route path="dashboard/insurance/List" element={<InsuranceList />} />
+                            <Route path="dashboard/insurance/edit/:ID_INSURANCE" element={<InsuranceEdit />} />
+
+                            <Route path="dashboard/driver/Add" element={<DriverForm/>}/>
+                            <Route path="dashboard/driver/List" element={<DriverList/>} />
+                            <Route path="dashboard/driver/edit/:ID_DRIVER" element={<DriverEdit />} />
 
                         </Routes>
                     </BrowserRouter>

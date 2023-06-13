@@ -48,6 +48,10 @@ export default function Login() {
         await setPasswordError(e.target.value === '');
     }
 
+    async function handleRememberMe(e) {
+        await setRememberMe(e.target.checked);
+    }
+
     const [emailErrorMsg, setEmailErrorMsg] = useState('Email is required.');
 
     const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,63})+$/u;
@@ -110,7 +114,7 @@ export default function Login() {
                 position: 'bottom',
                 isClosable: true,
             })
-            navigate('/');
+            navigate('/dashboard');
         } catch (error) {
             onOpen();
             setIsHandelLogin(false);
@@ -156,7 +160,7 @@ export default function Login() {
                                 align={'start'}
                                 justify={'space-between'}
                             >
-                                <Checkbox>Remember me</Checkbox>
+                                <Checkbox value={rememberMe} onChange={handleRememberMe}>Remember me</Checkbox>
                                 <Button
                                     as={ReachLink}
                                     to={'/register'}

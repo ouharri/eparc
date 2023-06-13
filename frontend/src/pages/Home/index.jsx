@@ -1,15 +1,42 @@
-import Nav from '../../components/core/navBar'
-import Footer from '../../components/core/footer'
 import Company from './company'
+import {useEffect, useState} from "react";
+import Nav from '../../components/core/navBar'
+import userInfo from '../../helpers/userInfo';
+import Footer from '../../components/core/footer'
+import isAuthenticated from '../../helpers/authenticate';
+import {Link as ReachLink, useNavigate} from "react-router-dom";
 import {Button, Container, createIcon, Flex, Heading, Stack, Text,} from '@chakra-ui/react';
 
 const Home = () => {
+
+    const [isAuth, setIsAuth] = useState(false);
+    const [user, setUser] = useState({});
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        async function checkAuth() {
+            await setIsAuth(await isAuthenticated());
+            await setUser(await userInfo());
+        }
+
+        checkAuth().then(async r => {
+            if (await isAuthenticated()) {
+                console.log(await userInfo());
+                await setUser(await userInfo());
+            } else {
+                console.log("notAuth");
+            }
+        });
+
+    }, [isAuth]);
+
     return (
         <>
             <div className={'h-screen'}>
-                <Nav/>
                 <div className={'h-screen hero'}
                      style={{backgroundImage: "url('/images/hero.png')", backgroundSize: "cover", objectFit: "cover"}}>
+                    <Nav IsAuth={isAuth} User={user.user}/>
 
                     <Container maxW={'7xl'}>
                         <Stack
@@ -50,16 +77,33 @@ const Home = () => {
                                 <Stack
                                     spacing={{base: 4, sm: 6}}
                                     direction={{base: 'column', sm: 'row'}}>
-                                    <Button
-                                        rounded={'full'}
-                                        size={'lg'}
-                                        fontWeight={'normal'}
-                                        px={6}
-                                        colorScheme={'red'}
-                                        bg={'red.400'}
-                                        _hover={{bg: 'red.500'}}>
-                                        Get started
-                                    </Button>
+                                    {!isAuth ?
+                                        <Button
+                                            rounded={'full'}
+                                            size={'lg'}
+                                            as={ReachLink}
+                                            to={'/register'}
+                                            fontWeight={'normal'}
+                                            px={6}
+                                            colorScheme={'red'}
+                                            bg={'red.400'}
+                                            _hover={{bg: 'red.500'}}>
+                                            Get started
+                                        </Button>
+                                        :
+                                        <Button
+                                            rounded={'full'}
+                                            size={'lg'}
+                                            as={ReachLink}
+                                            fontWeight={'normal'}
+                                            to={'/dashboard'}
+                                            px={6}
+                                            colorScheme={'red'}
+                                            bg={'red.400'}
+                                            _hover={{bg: 'red.500'}}>
+                                            Go to Dashboard
+                                        </Button>
+                                    }
                                     <Button
                                         rounded={'full'}
                                         size={'lg'}
