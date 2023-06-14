@@ -38,7 +38,7 @@ export default function InsuranceForm() {
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/insurance', formData);
             console.log(response.data.message);
-            navigate('/');
+            navigate('/dashboard/insurance');
         } catch (error) {
             if (error.response && error.response.status === 422) {
                 console.log(error.response.data.errors);

@@ -4,6 +4,7 @@ import {Link as ReachLink, Link} from 'react-router-dom';
 import {FaEdit, FaTrash} from 'react-icons/fa';
 import Dash from '../../components/admin/dash'
 import {Button} from "@chakra-ui/react";
+import swal from "sweetalert2";
 
 
 export default function InsuranceList() {
@@ -24,15 +25,24 @@ export default function InsuranceList() {
     };
 
     const deleteInsurance = async (ID_INSURANCE) => {
-        try {
-            await axios.delete('http://127.0.0.1:8000/api/insurance/' + ID_INSURANCE);
-            console.log('Insurance deleted successfully');
-            fetchInsurances();
-        } catch (error) {
-            console.log('Error deleting insurance:', error);
-        }
+        swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await axios.delete('http://127.0.0.1:8000/api/insurance/' + ID_INSURANCE);
+                    console.log('Insurance deleted successfully');
+                    fetchInsurances();
+                } catch (error) {
+                    console.log('Error deleting insurance:', error);
+                }
+            }
+        });
     };
-
+    
     return (
         <Dash>
             <div className="mt-24 flex justify-between items-center">
@@ -113,7 +123,7 @@ export default function InsuranceList() {
                                             <td className="flex items-center justify-center space-x-2 py-4">
                                                 <Link
                                                     className="btn btn-success mb-2 mr-2"
-                                                    to={`dadashboard/insurance/edit/${row.ID_INSURANCE}`}
+                                                    to={`/dashboard/insurance/edit/${row.ID_INSURANCE}`}
                                                 >
                                                     <FaEdit className="text-lg text-green-500"/>
                                                 </Link>

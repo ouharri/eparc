@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
-            Schema::create('insurance', function (Blueprint $table) {
+
+            Schema::create('insurances', function (Blueprint $table) {
                 $table->id('ID_INSURANCE');
                 $table->bigInteger('ID_VEHICLE')->unsigned();
                 $table->string('INSURANCE_COMPANY', 60)->nullable();
@@ -20,10 +20,10 @@ return new class extends Migration
                 $table->date('START_DATE')->nullable();
                 $table->date('EXPIRATION_DATE')->nullable();
                 $table->timestamps();
-    
+
                 $table->foreign('ID_VEHICLE')->references('ID_VEHICLE')->on('VEHICLE');
             });
-      
+
     }
 
     /**
