@@ -37,16 +37,16 @@ function App() {
 
                             <Route path="/dashboard" element={<Admin />} />
 
+                            <Route path="dashboard/vehicle" element={<VehicleList/>}/>
                             <Route path="dashboard/vehicle/Add" element={<VehicleForm/>}/>
-                            <Route path="dashboard/vehicle/List" element={<VehicleList/>}/>
                             <Route path="dashboard/vehicle/edit/:ID_VEHICLE" element={<VehicleEdit />} />
 
+                            <Route path="dashboard/insurance" element={<InsuranceList />} />
                             <Route path="dashboard/insurance/Add" element={<InsuranceForm/>}/>
-                            <Route path="dashboard/insurance/List" element={<InsuranceList />} />
                             <Route path="dashboard/insurance/edit/:ID_INSURANCE" element={<InsuranceEdit />} />
 
+                            <Route path="dashboard/driver" element={<DriverList/>} />
                             <Route path="dashboard/driver/Add" element={<DriverForm/>}/>
-                            <Route path="dashboard/driver/List" element={<DriverList/>} />
                             <Route path="dashboard/driver/edit/:ID_DRIVER" element={<DriverEdit />} />
 
                         </Routes>

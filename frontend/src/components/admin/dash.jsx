@@ -25,17 +25,18 @@ import {useEffect, useState} from "react";
 import {Link as ReachLink} from "react-router-dom";
 import logout from "../../helpers/logout";
 import userInfo from "../../helpers/userInfo";
+import FooterBanner from "../../components/footerBanner"
 
 if (!isAuthenticated()) {
     window.location.href = "/login";
 }
 
 const LinkItems = [
-    {name: 'Home', icon: FiHome},
-    {name: 'Vehicle', icon: FiTruck},
-    {name: 'Insurance', icon: FiFileText},
-    {name: 'Driver', icon: FiUser},
-    {name: 'Settings', icon: FiSettings},
+    {name: 'Home', icon: FiHome,href: '/dashboard'},
+    {name: 'Vehicle', icon: FiTruck, href: '/dashboard/vehicle'},
+    {name: 'Insurance', icon: FiFileText, href: '/dashboard/insurance'},
+    {name: 'Driver', icon: FiUser, href: '/dashboard/driver'},
+    {name: 'Settings', icon: FiSettings, href: '/dashboard/settings'},
 ];
 
 export default function SidebarWithHeader({children}) {
@@ -87,6 +88,7 @@ export default function SidebarWithHeader({children}) {
             <MobileNav onOpen={onOpen} User={user.user}/>
             <Box ml={{base: 0, md: 60}} p="4">
                 {children}
+                <FooterBanner/>
             </Box>
         </Box>
     );
@@ -104,14 +106,14 @@ const SidebarContent = ({onClose, ...rest}) => {
             pos="fixed"
             h="full"
             {...rest}>
-            <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+            <Flex h="20" alignItems="center" mx="8" mb="10" justifyContent="space-between">
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
                     FleetLinker
                 </Text>
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
             </Flex>
             {LinkItems.map((link) => (
-                <NavItem key={link.name} icon={link.icon}>
+                <NavItem key={link.name} icon={link.icon} as={ReachLink} to={link.href}>
                     {link.name}
                 </NavItem>
             ))}
@@ -129,7 +131,7 @@ const NavItem = ({icon, children, ...rest}) => {
                 role="group"
                 cursor="pointer"
                 _hover={{
-                    bg: 'cyan.400',
+                    bg: 'red.400',
                     color: 'white',
                 }}
                 {...rest}>
