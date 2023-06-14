@@ -1,4 +1,5 @@
 import Company from './company'
+import People from './people'
 import {useEffect, useState} from "react";
 import Nav from '../../components/core/navBar'
 import userInfo from '../../helpers/userInfo';
@@ -62,17 +63,17 @@ const Home = () => {
                                             bg: 'red.400',
                                             zIndex: -1,
                                         }}>
-                                        Umai Car,
+                                        FleetLinker,
                                     </Text>
                                     <br/>
                                     <Text as={'span'} color={'red.400'}>
-                                        Zoufriya everywhere!
+                                        Fleet everywhere!
                                     </Text>
                                 </Heading>
                                 <Text color={'gray.900'}>
-                                    Snippy is a rich coding snippets app that lets you create your own
-                                    code snippets, categorize them, and even sync them in the cloud so
-                                    you can use them anywhere. All that is free!
+                                    Welcome to our fleet management app. Efficiently manage your vehicle fleet with our
+                                    powerful platform. Say goodbye to complexity and manual tracking. Say hello to
+                                    streamlined fleet management.
                                 </Text>
                                 <Stack
                                     spacing={{base: 4, sm: 6}}
@@ -126,6 +127,7 @@ const Home = () => {
                 </div>
             </div>
             <Company/>
+            <People/>
             <Footer/>
         </>
     )

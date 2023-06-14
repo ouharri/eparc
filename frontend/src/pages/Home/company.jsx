@@ -42,7 +42,7 @@ export default function Example() {
                         <div className="relative pt-64 pb-10 rounded-2xl shadow-xl overflow-hidden">
                             <img
                                 className="absolute inset-0 h-full w-full object-cover"
-                                src="https://images.unsplash.com/photo-1521510895919-46920266ddb3?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&fp-x=0.5&fp-y=0.6&fp-z=3&width=1440&height=1440&sat=-100"
+                                src="https://images.pexels.com/photos/3422964/pexels-photo-3422964.jpeg?auto=compress&cs=tinysrgb&w=600"
                                 alt=""
                             />
                             <div className="absolute inset-0 bg-red-400 mix-blend-multiply"/>
@@ -92,27 +92,24 @@ export default function Example() {
                         </h2>
                         <div className="mt-6 text-gray-500 space-y-6">
                             <p className="text-lg">
-                                Sagittis scelerisque nulla cursus in enim consectetur quam. Dictum urna sed consectetur
-                                neque tristique
-                                pellentesque. Blandit amet, sed aenean erat arcu morbi. Cursus faucibus nunc nisl netus
-                                morbi vel
-                                porttitor vitae ut. Amet vitae fames senectus vitae.
+                                Welcome to our advanced fleet management web app, where efficiency meets simplicity.
+                                With our powerful platform, managing your vehicle fleet has never been easier.
+                                Streamline your operations, optimize performance, and stay in control of your fleet's
+                                every move.
                             </p>
                             <p className="text-base leading-7">
-                                Sollicitudin tristique eros erat odio sed vitae, consequat turpis elementum. Lorem nibh
-                                vel, eget
-                                pretium arcu vitae. Eros eu viverra donec ut volutpat donec laoreet quam urna.
-                                Sollicitudin tristique
-                                eros erat odio sed vitae, consequat turpis elementum. Lorem nibh vel, eget pretium arcu
-                                vitae. Eros eu
-                                viverra donec ut volutpat donec laoreet quam urna.
+                                Say goodbye to complex spreadsheets and manual tracking, and say hello to a seamless
+                                fleet management experience. Unlock the full potential of your fleet with our
+                                comprehensive suite of features and tools. Welcome to a new era of efficient and
+                                hassle-free fleet management.
                             </p>
                             <p className="text-base leading-7">
-                                Rhoncus nisl, libero egestas diam fermentum dui. At quis tincidunt vel ultricies.
-                                Vulputate aliquet
-                                velit faucibus semper. Pellentesque in venenatis vestibulum consectetur nibh id. In id
-                                ut tempus
-                                egestas. Enim sit aliquam nec, a. Morbi enim fermentum lacus in. Viverra.
+                                Experience the power of our advanced fleet management web app. Our platform simplifies
+                                fleet management, allowing you to streamline operations, optimize performance, and
+                                maintain full control over your fleet's activities. Bid farewell to complicated
+                                spreadsheets and laborious manual tracking, and embrace a seamless fleet management
+                                experience. Unlock the complete potential of your fleet using our comprehensive set of
+                                features and tools. Step into a new era of efficient and stress-free fleet management.
                             </p>
                         </div>
                     </div>
