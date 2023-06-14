@@ -3,25 +3,38 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import {Box, Button, FormControl, FormLabel, Heading, Input, Stack,} from '@chakra-ui/react';
 import Dash from '../../components/admin/dash';
-
+import Swal from 'sweetalert2';
 
 export default function DriverForm() {
     const navigate = useNavigate();
-    const [name, setName] = useState('')
-    const [Firstname, setFirstName] = useState('')
-    const [num, setNum] = useState('')
-    const [date, setDate] = useState('')
+    const [name, setName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [num, setNum] = useState('');
+    const [date, setDate] = useState('');
+
     const createDriver = async (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('DRIVER_NAME', name);
-        formData.append('DRIVER_FIRST_NAME', Firstname);
+        formData.append('DRIVER_FIRST_NAME', firstName);
         formData.append('DRIVER_LICENSE_NUMBER', num);
         formData.append('DRIVER_LICENSE_EXPIRATION_DATE', date);
 
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/driver', formData);
+            const response = await axios.post(
+                'http://127.0.0.1:8000/api/driver',
+                formData
+            );
             console.log(response.data.message);
+
+            // Affiche une alerte SweetAlert
+            Swal.fire({
+                icon: 'success',
+                title: 'Driver added successfully',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+
             navigate('/dashboard/driver');
         } catch (error) {
             if (error.response && error.response.status === 422) {
@@ -39,8 +52,8 @@ export default function DriverForm() {
                 boxShadow={'lg'}
                 rounded={'lg'}
                 p={6}
-                m="6"
-                mt="24"
+                m='6'
+                mt='24'
                 textAlign={'center'}
             >
                 <Stack align={'center'}>
@@ -51,44 +64,44 @@ export default function DriverForm() {
                         <FormControl>
                             <FormLabel>Driver Name</FormLabel>
                             <Input
-                                type="text"
-                                placeholder="Enter the driver name"
+                                type='text'
+                                placeholder='Enter the driver name'
                                 value={name}
                                 onChange={(e) => {
-                                    setName(e.target.value)
+                                    setName(e.target.value);
                                 }}
                             />
                         </FormControl>
                         <FormControl>
                             <FormLabel>Driver First Name</FormLabel>
                             <Input
-                                type="text"
-                                placeholder="Enter the driver first name"
-                                value={Firstname}
+                                type='text'
+                                placeholder='Enter the driver first name'
+                                value={firstName}
                                 onChange={(e) => {
-                                    setFirstName(e.target.value)
+                                    setFirstName(e.target.value);
                                 }}
                             />
                         </FormControl>
                         <FormControl>
                             <FormLabel>Driver License Number</FormLabel>
                             <Input
-                                type="number"
-                                placeholder="Enter the driver license number"
+                                type='number'
+                                placeholder='Enter the driver license number'
                                 value={num}
                                 onChange={(e) => {
-                                    setNum(e.target.value)
+                                    setNum(e.target.value);
                                 }}
                             />
                         </FormControl>
                         <FormControl>
                             <FormLabel>Driver License Expiration Date</FormLabel>
                             <Input
-                                type="date"
-                                placeholder="Enter the expiration date of the driver's license"
+                                type='date'
+                                placeholder="Enter the driver's license expiration date"
                                 value={date}
                                 onChange={(e) => {
-                                    setDate(e.target.value)
+                                    setDate(e.target.value);
                                 }}
                             />
                         </FormControl>
@@ -100,9 +113,8 @@ export default function DriverForm() {
                             mt={6}
                         >
                             <Button
-                                type="submit"
+                                type='submit'
                                 w={{base: 'full', sm: 'auto'}}
-
                                 bg={'red.400'}
                                 color={'white'}
                                 _hover={{
@@ -118,5 +130,3 @@ export default function DriverForm() {
         </Dash>
     );
 }
-     
-   

@@ -6,7 +6,7 @@ const Admin = () => {
     return (
         <div>
             <Dash>
-                <Table/>
+                <p>Hilu</p>
             </Dash>
         </div>
     )
