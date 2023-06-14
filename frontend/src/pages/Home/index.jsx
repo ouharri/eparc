@@ -128,7 +128,7 @@ const Home = () => {
             </div>
             <Company/>
             <People/>
-            <div className="bg-red-300">
+            <div className="bg-gradient-to-t from-red-400 via-red-400 mb-24">
                 <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center">
                     <div className="lg:w-0 lg:flex-1">
                         <h2 className="text-3xl font-extrabold tracking-tight text-gray-400 sm:text-4xl"
@@ -140,12 +140,12 @@ const Home = () => {
                             operations. Whether you're managing a small fleet or overseeing a large-scale transportation
                             network, our web-based app empowers you with the tools and insights you need to optimize
                             your fleet's performance.
-
+                            <br/>
                             Get Started in 2 Easy Steps:
-
+                            <br/>
                             1. Sign up: Create your FleetLinker account by providing your basic information. It only
                             takes a few minutes to get started.
-
+                            <br/>
                             2. Set up your fleet: Add your vehicles, drivers, and other relevant details to our
                             user-friendly interface. Customize the app to suit your specific fleet management needs.
                         </p>
