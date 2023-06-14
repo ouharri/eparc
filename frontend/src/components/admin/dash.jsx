@@ -32,7 +32,7 @@ if (!isAuthenticated()) {
 }
 
 const LinkItems = [
-    {name: 'Home', icon: FiHome,href: '/dashboard'},
+    {name: 'Home', icon: FiHome, href: '/dashboard'},
     {name: 'Vehicle', icon: FiTruck, href: '/dashboard/vehicle'},
     {name: 'Insurance', icon: FiFileText, href: '/dashboard/insurance'},
     {name: 'Driver', icon: FiUser, href: '/dashboard/driver'},
@@ -67,7 +67,7 @@ export default function SidebarWithHeader({children}) {
 
 
     return (
-        <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+        <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')} zIndex="100">
             <SidebarContent
                 onClose={() => onClose}
                 display={{base: 'none', md: 'block'}}
@@ -151,7 +151,7 @@ const NavItem = ({icon, children, ...rest}) => {
     );
 };
 
-const MobileNav = ({onOpen,User, ...rest}) => {
+const MobileNav = ({onOpen, User, ...rest}) => {
 
     const bgColor = useColorModeValue('white', 'gray.800');
     const borderColor = useColorModeValue('gray.200', 'gray.900');

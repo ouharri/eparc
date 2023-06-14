@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Dash from '../../components/admin/dash'
 import axios from 'axios';
+import swal from "sweetalert2";
 import {useNavigate} from 'react-router-dom';
 import {Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack} from '@chakra-ui/react';
 import {ChromePicker} from 'react-color';
@@ -34,8 +35,14 @@ export default function VehicleForm() {
 
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/vehicle', formData);
-            console.log(response.data.message);
-            navigate('/');
+            //alert swal for vehicle added successfully
+            await swal.fire({
+                title: 'Vehicle added successfully',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#c04c4c',
+            });
+            navigate('/dashboard/Vehicle');
         } catch (error) {
             if (error.response && error.response.status === 422) {
                 console.log(error.response.data.errors);
@@ -51,9 +58,9 @@ export default function VehicleForm() {
                 bg={'white'}
                 boxShadow={'lg'}
                 rounded={'lg'}
-                mt="28"
                 p={6}
                 m="6"
+                mt="24"
                 textAlign={'center'}
             >
                 <Stack align={'center'}>
